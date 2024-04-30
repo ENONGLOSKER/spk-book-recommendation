@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'PERPUS_ira.png' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+            
+    <title>PERPUS.ira</title>
+</head>
+<body>
+    <img src="{% static 'bg.png' %}" alt="spk" id="bg">
+    <img src="{% static 'boob.png' %}" alt="spk" id="boob">
+    <img src="{% static 'asset2.png' %}" alt="spk" id="asset1">
+
+     
+    
+    <div class="container">
+        <div class="judul">
+            <img src="{% static 'icon.png' %}" alt="spk">
+            <h2> PERPUS<span>.ira</span></h2>
+        </div>
+        
+        <div class="title">
+            <h1>Sistem Pendukung Keputusan</h1>
+            <p>Perpustakaan <span style="color:#fe900a ; font-weight: 600;"> SMAN 1 MASBAGIK</span> siap menghadirkan rekomendasi buku yang sesuai dengan kebutuhan pengunjung. Mari berinovasi untuk layanan perpustakaan yang lebih baik!</p>
+
+            <a href="{% url 'signin' %}" target="_blank">Get Started</a>
+        </div>
+            
+    </div>
+</body>
+</html>

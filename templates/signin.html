@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'PERPUS_ira.png' %}">
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+            
+    <title>PERPUS.ira</title>
+</head>
+<body>
+     
+    
+    <div class="container">
+
+        <div class="judul">
+            <img src="{% static 'icon.png' %}" alt="spk">
+            <h2> PERPUS<span>.ira</span></h2>
+        </div>
+        
+        <div class="title">
+            <div class="form">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h4>Sign in</h4>
+                    <h6>SPK Pengadaan Buku</h6>
+                    <br>
+                    <label for="username">
+                        Username
+                        <input type="text" placeholder="Username" name="username">
+                    </label>
+                    <label for="password">
+                        Password
+                        <input type="password" placeholder="Password" name="password">
+                    </label>
+
+                    <button type="submit">Sign in</button>
+
+                    <p id="kembali">Kembali ke halaman <a href="{% url 'index' %}">Utama</a></p>
+                </form>
+                <img src="{% static 'bg.png' %}" alt="spk" width="400px">
+            </div>
+        </div>
+            
+    </div>
+
+    <!-- sweet alert -->
+    {%for message in messages%}
+    {% if message.tags == 'error' %}                     
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>                                            
+    <script>
+        var m="{{message}}";
+        swal("Sign in",m,"error");
+    </script>
+    {% endif %}
+  {%endfor%}
+
+
+</body>
+</html>

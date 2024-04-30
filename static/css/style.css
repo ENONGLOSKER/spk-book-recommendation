@@ -1,0 +1,95 @@
+:root {
+    /* warna */
+    --satu: #FFF7F8;
+    --dua: #027BFF; 
+    --tiga: #323232; 
+    --empat: #ffffff; 
+
+
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Playfair Display", serif;
+}
+body{
+    background-color: var(--satu);
+}
+#boob{
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+    width: 200px;
+}
+#asset1{
+    position: absolute;
+    left: 6%;
+    top: 15%;
+    width: 100px;
+}
+#bg{
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+}
+#boob{
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+    width: 200px;
+}
+#asset1{
+    position: absolute;
+    left: 6%;
+    top: 15%;
+    width: 100px;
+}
+
+.judul{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 30px;
+}
+span{
+    color: #f9bd09;
+}
+
+.container{
+    margin: 10px  127px;
+}
+.container .title{
+    width: 50%;
+}
+.container .title h1{
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 90px;
+    font-weight: 500;
+    letter-spacing: 7px;
+}
+.container .title p{
+   margin-bottom: 37px;
+   width: 85%;
+}
+.container .title a{
+    padding: 11px 31px;
+    text-decoration: none;
+    background-color: var(--dua);
+    color: var(--satu);
+    font-weight: 500;
+    box-shadow: 4px 4px 40px #48a0ffbc;
+    border-radius: 6px;
+    letter-spacing: 1px;
+}
+.container .title a:hover{
+    background-color: #0260c4;
+}
+
+
+
+
