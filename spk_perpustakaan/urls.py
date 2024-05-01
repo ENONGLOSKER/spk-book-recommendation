@@ -23,6 +23,10 @@ from spk_perpus_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
-    path('signin/',views.signin_form, name='signin')
+    path('dashboard/',views.dashboard, name='dashboard'),
+    path('dashboard/alternatif/',views.dashboard_alternatif, name='alternatif'),
+
+    path('signin/',views.signin_form, name='signin'),
+    path('signout/',views.signout_form, name='signout'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

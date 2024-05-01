@@ -118,14 +118,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = '/img/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img')
+STATIC_URL = '/static/'  # Untuk akses file-file statis di dalam aplikasi Django
+MEDIA_URL = '/img/'     # URL untuk akses file media seperti gambar
+MEDIA_ROOT = os.path.join(BASE_DIR, 'img')  # Direktori tempat file media akan disimpan
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Direktori tempat file-file statis akan dikumpulkan
 
 STATICFILES_DIRS = [
-    # BASE_DIR / 'static',
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static')  # Direktori tambahan yang berisi file-file statis
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
