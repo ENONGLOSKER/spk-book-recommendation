@@ -79,6 +79,12 @@
     {%endblock script%}
 
     <!-- background-image: linear-gradient(-120deg, #8211e8 10%, #17029d 100%); -->
- 
+    <script>
+        $(document).ready(function(){
+            $('.carousel').carousel({
+                interval: 2000 // Mengatur waktu berpindah carosel dalam milidetik
+            });
+        });
+    </script>
 </body>
 </html>
