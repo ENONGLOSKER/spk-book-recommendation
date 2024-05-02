@@ -24,7 +24,21 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
     path('dashboard/',views.dashboard, name='dashboard'),
+    # alternatif
     path('dashboard/alternatif/',views.dashboard_alternatif, name='alternatif'),
+    path('dashboard/alternatif/add/',views.tambah_alternatif, name='add_alternatif'),
+    path('dashboard/alternatif/edit/<int:id>',views.edit_alternatif, name='edit_alternatif'),
+    path('dashboard/alternatif/delete/<int:id>',views.hapus_alternatif, name='hapus_alternatif'),
+    # kriteria
+    path('dashboard/kriteria/',views.dashboard_kriteria, name='kriteria'),
+    path('dashboard/kriteria/add/',views.tambah_kriteria, name='add_kriteria'),
+    path('dashboard/kriteria/edit/<int:id>',views.edit_kriteria, name='edit_kriteria'),
+    path('dashboard/kriteria/delete/<int:id>',views.hapus_kriteria, name='hapus_kriteria'),
+    # crips
+    path('dashboard/kriteria/crips/<int:id>',views.dashboard_crips, name='crips'),
+    path('dashboard/kriteria/crips/add/',views.tambah_crips, name='add_crips'),
+    path('dashboard/kriteria/crips/edit/<int:id>',views.edit_crips, name='edit_crips'),
+    path('dashboard/kriteria/crips/delete/<int:id>',views.hapus_crips, name='hapus_crips'),
 
     path('signin/',views.signin_form, name='signin'),
     path('signout/',views.signout_form, name='signout'),
