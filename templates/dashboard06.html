@@ -84,91 +84,89 @@
 
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">ALTERNATIF BUKU<h1>
+            <h1 class="h3 mb-0 text-gray-800" style="text-transform: uppercase;">PERENGKINGAN <h1>
                 
-                <a href="{% url 'add_alternatif' %}"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                <!-- <a href="{% url 'add_penilaian' %}"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i>  Add Data
-                </a>  
+                </a>   -->
         </div>
        
          
         <div class="row">
 
             <!-- Area tabel -->
-            <div class="col-xl-12 col-lg-9">
+           
+            {% if  data_rengking %}
+            <div class="col-xl-12 col-lg-9 mb-5">
                 <div class="card shadow mb-UKM 4">
                     <!-- Card Header - Dropdown -->
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DATA ALTERNATIF</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DATA RENGKING </h6>
                         </div>
+                        
                         <div class="card-body table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="text-center">
-                                        <tr>
-                                            <th>NO</th>
-                                            <th>SIMBOL</th>                                            
-                                            <th>NAMA</th>
-                                            <th>CREATED</th>
-                                            <th>UPDATED</th>
-                                            <th>ACTION</th>
+                                        <tr >
+                                            <th>NO</th>                                          
+                                            <th>ALTERNATIF</th>
+                                            <th>KRITERIA1</th>
+                                            <th>KRITERIA2</th>
+                                            <th>KRITERIA3</th>
+                                            <th>KRITERIA4</th>
+                                            <th>NILAI TOTAL</th>
+                                            <th>RENGKING</th>
                                         </tr>
                                     </thead>
                                     <tbody>  
-                                                                                                                                                                                                  
-                                    {%for data in datas%}                                                
-                                        <tr style="text-transform: capitalize;">
-                                            <td class="text-center">{{forloop.counter}}</td>
-                                            <td class="text-center">{{data.simbol}}</td>
-                                            <td>{{data.nama}}</td>   
-                                            <td class="text-center">{{data.created}}</td>
-                                            <td class="text-center">{{data.updated}}</td>
-                                            <td class="text-center" >
-                                                <a href="{% url 'edit_alternatif' id=data.id %}" class="btn btn-warning btn-icon-split mb-1 ">
-                                                    <span class="icon text-white-25">
-                                                        <i class="fas fa-edit"></i>
-                                                    </span>                                                                
-                                                </a>
-                                                
-                                                <a href="{% url 'hapus_alternatif' id=data.id %}" class="btn btn-danger btn-icon-split mb-1" onclick="return confirm('yakin ingin menghapus data?')">
-                                                    <span class="icon text-white-25">
-                                                        <i class="fas fa-trash"></i>
-                                                    </span>                                                                
-                                                </a>
+                                    {%for data in data_rengking%}                                                
+                                        <tr style="text-transform: capitalize;" class="text-center">
+                                            <td>{{forloop.counter}}</td>
+                                            <td class="text-left">
+                                                {% if forloop.first %}
+                                                    {{data.alternatif.nama}} 
+                                                    <ion-icon name="checkmark-circle" style="color: rgb(150, 49, 244);"></ion-icon>
+                                                    
+                                                {% else %}
+                                                    {{data.alternatif.nama}}
+                                                {% endif %}
+
+                                            </td>   
+                                            <td>{{data.kriteria1}}</td>
+                                            <td>{{data.kriteria2}}</td>
+                                            <td>{{data.kriteria3}}</td>
+                                            <td>{{data.kriteria4}}</td>
+                                            <td>{{data.total_nilai}}</td>
+                                            <td>
+                                                {% if forloop.first %}
+                                                <span class="badge rounded bg-primary text-white px-2 py-1">Rekomendasi</span>
+                                                {% else %}
+                                                <span class="badge rounded bg-danger text-white px-2 py-1">Tidak Direkomendasikan</span>
+                                                {% endif %}
                                             </td>
-                                        
                                         </tr> 
-                                    {%endfor%}
-                                    </tbody>
+                                    {%endfor%}                                                                       
+                                </tbody>
                                 </table>
-                                <!-- Pagination -->
-                                <!-- <div class="d-flex justify-content-center">
-                                    <ul class="pagination">
-                                        {% if datas.has_previous %}
-                                            <li class="page-item"><a class="page-link" href="?page={{ datas.previous_page_number }}">Previous</a></li>
-                                        {% else %}
-                                            <li class="page-item disabled"><span class="page-link">Previous</span></li>
-                                        {% endif %}
-                                        
-                                        {% for num in datas.paginator.page_range %}
-                                            {% if datas.number == num %}
-                                                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                                            {% else %}
-                                                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                        
-                                        {% if datas.has_next %}
-                                            <li class="page-item"><a class="page-link" href="?page={{ datas.next_page_number }}">Next</a></li>
-                                        {% else %}
-                                            <li class="page-item disabled"><span class="page-link">Next</span></li>
-                                        {% endif %}
-                                    </ul>
-                                </div>                                 -->
-                        </div>
+                                
+                            </div>
                     </div>                               
                 </div>
             </div>
+            {% else %}
+                {% if  data_normalisasi %}
+                <div class="col-xl-12 col-lg-9 mb-5">
+                    <div class="card shadow mb-UKM 4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card shadow text-center p-5">
+                            <h3>Data Rengking Belum Dihitung!</h3>
+                        </div>                               
+                    </div>
+                </div>
+                {% else %}
+                {% endif %}
+            {% endif %}
         </div>
 
     </div>

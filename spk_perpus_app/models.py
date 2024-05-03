@@ -12,7 +12,7 @@ class Alternatif(models.Model):
     
 class Kriteria(models.Model):
     nama = models.CharField(max_length=50)
-    bobot = models.IntegerField()
+    bobot = models.FloatField()
     atribut = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -29,3 +29,26 @@ class Crips(models.Model):
 
     def __str__(self) -> str:
         return str(self.nilai)
+
+
+class Penilaian(models.Model):
+    alternatif = models.ForeignKey(Alternatif, on_delete=models.CASCADE )
+    kriteria1 = models.ForeignKey(Crips, related_name='kriteria1', on_delete=models.CASCADE)
+    kriteria2 = models.ForeignKey(Crips, related_name='kriteria2', on_delete=models.CASCADE)
+    kriteria3 = models.ForeignKey(Crips, related_name='kriteria3', on_delete=models.CASCADE)
+    kriteria4 = models.ForeignKey(Crips, related_name='kriteria4', on_delete=models.CASCADE)
+
+class Normalisasi(models.Model):
+    alternatif = models.ForeignKey(Alternatif, on_delete=models.CASCADE )
+    kriteria1 = models.FloatField()
+    kriteria2 = models.FloatField()
+    kriteria3 = models.FloatField()
+    kriteria4 = models.FloatField()
+
+class Rengking(models.Model):
+    alternatif = models.ForeignKey(Alternatif, on_delete=models.CASCADE )
+    kriteria1 = models.FloatField()
+    kriteria2 = models.FloatField()
+    kriteria3 = models.FloatField()
+    kriteria4 = models.FloatField()
+    total_nilai = models.FloatField()

@@ -39,6 +39,18 @@ urlpatterns = [
     path('dashboard/kriteria/crips/add/',views.tambah_crips, name='add_crips'),
     path('dashboard/kriteria/crips/edit/<int:id>',views.edit_crips, name='edit_crips'),
     path('dashboard/kriteria/crips/delete/<int:id>',views.hapus_crips, name='hapus_crips'),
+    # alternatif
+    path('dashboard/penilaian/',views.dashboard_penilaian, name='penilaian'),
+    path('dashboard/penilaian/add/',views.tambah_penilaian, name='add_penilaian'),
+    path('dashboard/penilaian/edit/<int:id>',views.edit_penilaian, name='edit_penilaian'),
+    path('dashboard/penilaian/delete/<int:id>',views.hapus_penilaian, name='hapus_penilaian'),
+
+    path('dashboard/penilaian/normalisasi/',views.hitung_normalisasi, name='hitung_normalisasi'),
+    path('dashboard/penilaian/normalisasi/reset',views.reset_normalisasi, name='reset_normalisasi'),
+
+    path('dashboard/rengking/',views.dashboard_rengking, name='rengking'),
+    path('dashboard/penilaian/rengking/',views.hitung_rengking, name='hitung_rengking'),
+    path('dashboard/penilaian/rengking/reset',views.reset_rengking, name='reset_rengking'),
 
     path('signin/',views.signin_form, name='signin'),
     path('signout/',views.signout_form, name='signout'),

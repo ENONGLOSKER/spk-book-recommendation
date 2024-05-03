@@ -118,7 +118,7 @@
                                     <tbody>  
                                                                                                                                                                                                   
                                     {%for data in datas%}                                                
-                                        <tr>
+                                        <tr style="text-transform: capitalize;">
                                             <td class="text-center">{{forloop.counter}}</td>
                                             <td> <a href="{% url 'crips' id=data.id %}">{{data.nama}}</a></td>   
                                             <td class="text-center">{{data.bobot}}</td>
