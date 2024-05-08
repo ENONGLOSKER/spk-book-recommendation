@@ -348,7 +348,6 @@ def signin_form(request):
             messages.error(request, "Sign in Gagal, Silahkan Coba Kembali!")
             return redirect('signin')
         
-    # tidak bisa mengkases halaman login kemabli
     elif request.user.is_authenticated:
         return redirect('dashboard')
         # return redirect('admin:index')
