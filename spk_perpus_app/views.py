@@ -12,17 +12,36 @@ def index(request):
 
 @login_required
 def dashboard(request):
+    # Mendapatkan data rengking dari database
+    data_rengking = Rengking.objects.all()
     alternatif = Alternatif.objects.all().count()
     kriteria = Kriteria.objects.all().count()
     penilaian = Penilaian.objects.all().count() / Alternatif.objects.all().count()
 
+    # Mendapatkan total nilai tertinggi
+    max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
+    # Mendapatkan jumlah rekomendasi
+    total_rekomendasi = Rengking.objects.filter(total_nilai=max_total).count()
+
+    # Mengumpulkan data untuk grafik Highcharts
+    categories = []
+    series_data = []
+
+    for rengking in data_rengking:
+        categories.append(rengking.alternatif.nama)
+        series_data.append(rengking.total_nilai)
 
     context = {
+        'categories': categories,
+        'series_data': series_data,
         'alternatif':alternatif,
         'kriteria':kriteria,
         'penilaian':penilaian,
+        'total_rekomendasi': total_rekomendasi
     }
+
     return render(request, 'dashboard01.html', context)
+
 
 # ALTERNATIF ---------------------------------------------------------------------
 @login_required
@@ -241,7 +260,7 @@ def hapus_penilaian(request,id):
 @login_required
 def dashboard_rengking(request):
     max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
-    data_rengking = Rengking.objects.all().order_by('-id')
+    data_rengking = Rengking.objects.all().order_by('-total_nilai')
 
     context ={
         'data_rengking': data_rengking,
