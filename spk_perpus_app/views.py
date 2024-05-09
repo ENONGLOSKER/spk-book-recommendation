@@ -240,10 +240,12 @@ def hapus_penilaian(request,id):
 
 @login_required
 def dashboard_rengking(request):
-    data_rengking = Rengking.objects.all().order_by('id')
+    max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
+    data_rengking = Rengking.objects.all().order_by('-id')
 
     context ={
         'data_rengking': data_rengking,
+        'max_total': max_total
     }
     return render(request, 'dashboard06.html', context)
 

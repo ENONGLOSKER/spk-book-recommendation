@@ -58,7 +58,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="text-transform: capitalize;">{{user}}</span>
                     <img class="img-profile rounded-circle"
-                        src="{%static 'img/icons.png'%}">
+                        src="{%static 'img/ira_img.png'%}">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -148,9 +148,15 @@
                                             <td>{{ min_values.kriteria2__nilai__min }}</td>
                                             <td>{{ min_values.kriteria3__nilai__min }}</td>
                                             <td>{{ min_values.kriteria4__nilai__min }}</td>
+                                            {% if data_normalisasi %}
+                                            <td rowspan="2" style="text-align: center; vertical-align: middle;">
+                                               
+                                            </td>
+                                            {% else %}
                                             <td rowspan="2" style="text-align: center; vertical-align: middle;">
                                                 <button type="submit" class="btn btn-primary text-white">Hitung Normalisasi</button>
                                             </td>
+                                            {% endif %}
                                         </tr>
                                         <tr style="background-color: rgb(224, 196, 250);" class="text-center text-primary">
                                             <td colspan="2" class="text-center bg-primary text-white"> NILAI MAX</td>

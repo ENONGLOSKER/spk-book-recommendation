@@ -58,7 +58,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="text-transform: capitalize;">{{user}}</span>
                     <img class="img-profile rounded-circle"
-                        src="{%static 'img/icons.png'%}">
+                        src="{%static 'img/ira_img.png'%}">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -124,7 +124,7 @@
                                         <tr style="text-transform: capitalize;" class="text-center">
                                             <td>{{forloop.counter}}</td>
                                             <td class="text-left">
-                                                {% if forloop.first %}
+                                                {% if data.total_nilai >= max_total  %}
                                                     {{data.alternatif.nama}} 
                                                     <ion-icon name="checkmark-circle" style="color: rgb(150, 49, 244);"></ion-icon>
                                                     
@@ -139,7 +139,7 @@
                                             <td>{{data.kriteria4}}</td>
                                             <td>{{data.total_nilai}}</td>
                                             <td>
-                                                {% if forloop.first %}
+                                                {% if data.total_nilai >= max_total  %}
                                                 <span class="badge rounded bg-primary text-white px-2 py-1">Rekomendasi</span>
                                                 {% else %}
                                                 <span class="badge rounded bg-danger text-white px-2 py-1">Tidak Direkomendasikan</span>
@@ -155,17 +155,14 @@
                 </div>
             </div>
             {% else %}
-                {% if  data_normalisasi %}
-                <div class="col-xl-12 col-lg-9 mb-5">
-                    <div class="card shadow mb-UKM 4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="card shadow text-center p-5">
-                            <h3>Data Rengking Belum Dihitung!</h3>
-                        </div>                               
-                    </div>
+            <div class="col-xl-12 col-lg-9 mb-5">
+                <div class="card shadow mb-UKM 4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card shadow text-center p-5">
+                        <h3>Data Rengking Belum Dihitung!</h3>
+                    </div>                               
                 </div>
-                {% else %}
-                {% endif %}
+            </div>
             {% endif %}
         </div>
 
