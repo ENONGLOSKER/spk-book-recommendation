@@ -3,16 +3,26 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min
-
+# modul core
 from .models import Alternatif, Kriteria, Crips, Penilaian, Normalisasi, Rengking
 from .forms import AlternatifForm, KriteriaForm, CripsForm, PenilaianForm
+
 # Create your views here.
+"""
+def index : 
+    fungsi untuk halaman home, yang hanya memamggil template home.html
+
+def dashboard : 
+    fungsi untuk halaman dashboard, yang memanggil templates dashboard01.html
+    menampilkan jumlah data alternatif, kriteria, bobot, rekomendasi berdasarkan perengkingan
+    - rekomendasi di dapat dari total nilai tertinggi dari data hasil  perengkingan, jika ada nilai tertinggi yang sama maka
+    akan dihitung berapa total nilai yang sama tersebut sebagai julah rekomendasi (total_rekomendasi).
+"""
 def index(request):
     return render(request, 'index.html')
 
 @login_required
 def dashboard(request):
-    # Mendapatkan data rengking dari database
     data_rengking = Rengking.objects.all()
     alternatif = Alternatif.objects.all().count()
     kriteria = Kriteria.objects.all().count()
@@ -44,6 +54,37 @@ def dashboard(request):
 
 
 # ALTERNATIF ---------------------------------------------------------------------
+"""
+def dashboard_alternatif : 
+    fungsi untuk halaman dashboard, yang memanggil templates dashboard02.html dan
+    menampilkan semua data alternatif dalam bentuk tabel pada templates. dengan cara,
+    - mengambil semua data pada tabel alternatif -> datas = Alternatif.objects.all() 
+    - melemparnya ke templates melalui context -> context ={ 'datas':datas }
+
+def tambah_alternatif : 
+    fungsi untuk form saat menambah data alternatif, degan cara,
+    - jika method saat menekan tombol simpan di form adalah POST maka akan menjalakan blok if
+    yang dimana akan mengekcek apakah semua data yang di isikan pada kolom form sudah sesuai denga tipe filed pada databasenya
+    jika benar maka akan di simpan setelah itu akan di bawa menuju halaman alternatif untuk melihat semua data pada tabel alternatif.
+    jika salah maka akan di bawa ke halaman itu sendiri atau halaman form tersebut (ngerefres ulang)
+
+def edit_alternatif:
+    fungsi untuk form saat mengedit data alternatif, degan cara,
+    - ambil data mana yang harus di edit tersebut dengan cara mengambil id nya (karena setiap alternatif memiliki id yang berbeda /primeri key)
+    - setelah mendapatkan data yang mau diedit maka cek metode request nya jika POST maka akan mengambil data baru yang diisikan pada form
+    yang akan menimpa data lama.
+    - kemudian akan mengecek apakah data baru tersebut sudah sesuai dengan tipe filed pada databasenya, jika benar maka akan disimpan kemudian akan
+    dibawa ke halaman alternatif untuk melihat semua data alternatif yang ada termaruk data yang sudah di edit tersebut.
+    jika salah maka akan tetap berada di halaman form dengan cara merefres atau me load ulang halaman tersbut.
+
+def hapus_alternatif:
+    fungsi untuk menghapus data alternatif, degan cara.
+    - mengambil data mana yang harus di hapus sama seperti dengan update dengan cara mengambil id nya
+    - kemudian setelah itu akan langsung menghpus data tersebut dari tabel alternatif
+
+
+* begitupun dengan fungsi lain seperti kriteria, cripsh dan penilaian (bedanya cuma ke tabel tujuanya)
+"""
 @login_required
 def dashboard_alternatif(request):
     datas = Alternatif.objects.all()
@@ -62,10 +103,10 @@ def tambah_alternatif(request):
             return redirect('alternatif')
     else:
         form = AlternatifForm()
+
     context = {
         'form':form,
     }
-
     return render(request, 'dashboard_form.html', context)
 
 @login_required
@@ -270,7 +311,6 @@ def dashboard_rengking(request):
 
 
 # PERHITUNGAN 
-
 def hitung_normalisasi(request):
     if request.method == 'POST':
         # Mendapatkan semua data penilaian
@@ -342,7 +382,6 @@ def hitung_rengking(request):
 
         # Redirect kembali ke halaman dashboard
         return redirect('penilaian')
-
 
 
 def reset_normalisasi(request):
