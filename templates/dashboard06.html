@@ -58,7 +58,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="text-transform: capitalize;">{{user}}</span>
                     <img class="img-profile rounded-circle"
-                        src="{%static 'img/ira_img.png'%}">
+                        src="{%static 'img/ira_imgs.png'%}">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -111,10 +111,10 @@
                                         <tr >
                                             <th>NO</th>                                          
                                             <th>ALTERNATIF</th>
-                                            <th>KRITERIA1</th>
+                                            <!-- <th>KRITERIA1</th>
                                             <th>KRITERIA2</th>
                                             <th>KRITERIA3</th>
-                                            <th>KRITERIA4</th>
+                                            <th>KRITERIA4</th> -->
                                             <th>NILAI TOTAL</th>
                                             <th>RENGKING</th>
                                         </tr>
@@ -133,10 +133,10 @@
                                                 {% endif %}
 
                                             </td>   
-                                            <td>{{data.kriteria1}}</td>
+                                            <!-- <td>{{data.kriteria1}}</td>
                                             <td>{{data.kriteria2}}</td>
                                             <td>{{data.kriteria3}}</td>
-                                            <td>{{data.kriteria4}}</td>
+                                            <td>{{data.kriteria4}}</td> -->
                                             <td>{{data.total_nilai}}</td>
                                             <td>
                                                 {% if data.total_nilai >= max_total  %}

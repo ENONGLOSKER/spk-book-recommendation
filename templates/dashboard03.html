@@ -58,7 +58,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="text-transform: capitalize;">{{user}}</span>
                     <img class="img-profile rounded-circle"
-                        src="{%static 'img/ira_img.png'%}">
+                        src="{%static 'img/ira_imgs.png'%}">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -120,7 +120,7 @@
                                     {%for data in datas%}                                                
                                         <tr style="text-transform: capitalize;">
                                             <td class="text-center">{{forloop.counter}}</td>
-                                            <td> <a href="{% url 'crips' id=data.id %}">{{data.nama}}</a></td>   
+                                            <td>{{data.nama}}</td>   
                                             <td class="text-center">{{data.bobot}}</td>
                                             <td class="text-center">{{data.atribut}}</td>
                                             <td class="text-center">{{data.created}}</td>

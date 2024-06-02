@@ -58,7 +58,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="text-transform: capitalize;">{{user}}</span>
                     <img class="img-profile rounded-circle"
-                        src="{%static 'img/ira_img.png'%}">
+                        src="{%static 'img/ira_imgs.png'%}">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -142,12 +142,12 @@
                                     {%endfor%}
                                     <form method="post" action="{% url 'hitung_normalisasi' %}">
                                         {% csrf_token %}
-                                        <tr style="background-color: rgb(224, 196, 250);" class="text-center text-primary">
+                                        <!-- <tr style="background-color: rgb(224, 196, 250);" class="text-center text-primary">
                                             <td colspan="2" class="text-center bg-primary text-white"> NILAI MIN</td>
-                                            <td>{{ min_values.kriteria1__nilai__min }}</td>
-                                            <td>{{ min_values.kriteria2__nilai__min }}</td>
-                                            <td>{{ min_values.kriteria3__nilai__min }}</td>
-                                            <td>{{ min_values.kriteria4__nilai__min }}</td>
+                                            <td>{{ min_values.kriteria1__min }}</td>
+                                            <td>{{ min_values.kriteria2__min }}</td>
+                                            <td>{{ min_values.kriteria3__min }}</td>
+                                            <td>{{ min_values.kriteria4__min }}</td>
                                             {% if data_normalisasi %}
                                             <td rowspan="2" style="text-align: center; vertical-align: middle;">
                                                
@@ -157,13 +157,22 @@
                                                 <button type="submit" class="btn btn-primary text-white">Hitung Normalisasi</button>
                                             </td>
                                             {% endif %}
-                                        </tr>
+                                        </tr> -->
                                         <tr style="background-color: rgb(224, 196, 250);" class="text-center text-primary">
                                             <td colspan="2" class="text-center bg-primary text-white"> NILAI MAX</td>
-                                            <td>{{ max_values.kriteria1__nilai__max }}</td>
-                                            <td>{{ max_values.kriteria2__nilai__max }}</td>
-                                            <td>{{ max_values.kriteria3__nilai__max }}</td>
-                                            <td>{{ max_values.kriteria4__nilai__max }}</td>
+                                            <td>{{ max_values.kriteria1__max }}</td>
+                                            <td>{{ max_values.kriteria2__max }}</td>
+                                            <td>{{ max_values.kriteria3__max }}</td>
+                                            <td>{{ max_values.kriteria4__max }}</td>
+                                            {% if data_normalisasi %}
+                                            <td rowspan="2" style="text-align: center; vertical-align: middle;">
+                                               
+                                            </td>
+                                            {% else %}
+                                            <td rowspan="2" style="text-align: center; vertical-align: middle;">
+                                                <button type="submit" class="btn btn-primary text-white">Hitung Normalisasi</button>
+                                            </td>
+                                            {% endif %}
                                         </tr>
                                     </form>
                                     
@@ -185,7 +194,8 @@
             </div>
             {% endif %}
 
-            {% if  data_normalisasi %}
+            <!-- data normalisasi -->
+            {% if data_normalisasi %}
             <div class="col-xl-12 col-lg-9 mb-5">
                 <div class="card shadow mb-UKM 4">
                     <!-- Card Header - Dropdown -->

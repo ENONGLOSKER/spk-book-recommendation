@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min
 # modul core
-from .models import Alternatif, Kriteria, Crips, Penilaian, Normalisasi, Rengking
-from .forms import AlternatifForm, KriteriaForm, CripsForm, PenilaianForm
+from .models import Alternatif, Kriteria, Penilaian, Normalisasi, Rengking
+from .forms import AlternatifForm, KriteriaForm, PenilaianForm
 
 # Create your views here.
 """
@@ -81,7 +81,6 @@ def hapus_alternatif:
     fungsi untuk menghapus data alternatif, degan cara.
     - mengambil data mana yang harus di hapus sama seperti dengan update dengan cara mengambil id nya
     - kemudian setelah itu akan langsung menghpus data tersebut dari tabel alternatif
-
 
 * begitupun dengan fungsi lain seperti kriteria, cripsh dan penilaian (bedanya cuma ke tabel tujuanya)
 """
@@ -179,53 +178,53 @@ def hapus_kriteria(request,id):
     return redirect('kriteria')
 
 # CRIPS ---------------------------------------------------------------------
-@login_required
-def dashboard_crips(request, id):
-    kriteria = get_object_or_404(Kriteria, id=id)
-    data_crips = kriteria.crips.all()
+# @login_required
+# def dashboard_crips(request, id):
+#     kriteria = get_object_or_404(Kriteria, id=id)
+#     data_crips = kriteria.crips.all()
 
-    context ={
-        'kriteria':kriteria,
-        'datas':data_crips,
-    }
-    return render(request, 'dashboard04.html', context)
-@login_required
-def tambah_crips(request):
-    if request.method == 'POST':
-        form = CripsForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('kriteria')
-    else:
-        form = CripsForm()
-    context = {
-        'form':form,
-    }
+#     context ={
+#         'kriteria':kriteria,
+#         'datas':data_crips,
+#     }
+#     return render(request, 'dashboard04.html', context)
+# @login_required
+# def tambah_crips(request):
+#     if request.method == 'POST':
+#         form = CripsForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('kriteria')
+#     else:
+#         form = CripsForm()
+#     context = {
+#         'form':form,
+#     }
 
-    return render(request, 'dashboard_form.html', context)
+#     return render(request, 'dashboard_form.html', context)
 
-@login_required
-def edit_crips(request,id):
-    crips = Crips.objects.get(id=id)
+# @login_required
+# def edit_crips(request,id):
+#     crips = Crips.objects.get(id=id)
     
-    if request.method == 'POST':
-        form = CripsForm(request.POST, instance=crips)
-        if form.is_valid():
-            form.save()
-            return redirect('kriteria')
-    else:
-        form = CripsForm(instance=crips)
+#     if request.method == 'POST':
+#         form = CripsForm(request.POST, instance=crips)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('kriteria')
+#     else:
+#         form = CripsForm(instance=crips)
 
-    context = {
-        'form':form,
-    }
-    return render(request, 'dashboard_form.html', context)
+#     context = {
+#         'form':form,
+#     }
+#     return render(request, 'dashboard_form.html', context)
 
-@login_required
-def hapus_crips(request,id):
-    crips = Crips.objects.get(id=id)
-    crips.delete()
-    return redirect('kriteria')
+# @login_required
+# def hapus_crips(request,id):
+#     crips = Crips.objects.get(id=id)
+#     crips.delete()
+#     return redirect('kriteria')
 
 # PENILAIAN ---------------------------------------------------------------------
 @login_required
@@ -235,18 +234,18 @@ def dashboard_penilaian(request):
     data_kriteria = Kriteria.objects.all()
     data_rengking = Rengking.objects.all()
 
-    # Menghitung nilai maksimal dan minimal untuk setiap kriteria
+    # # Menghitung nilai maksimal dan minimal untuk setiap kriteria
     max_values = Penilaian.objects.aggregate(
-        Max('kriteria1__nilai'), 
-        Max('kriteria2__nilai'), 
-        Max('kriteria3__nilai'), 
-        Max('kriteria4__nilai')
+        Max('kriteria1'), 
+        Max('kriteria2'), 
+        Max('kriteria3'), 
+        Max('kriteria4')
     )
     min_values = Penilaian.objects.aggregate(
-        Min('kriteria1__nilai'), 
-        Min('kriteria2__nilai'), 
-        Min('kriteria3__nilai'), 
-        Min('kriteria4__nilai')
+        Min('kriteria1'), 
+        Min('kriteria2'), 
+        Min('kriteria3'), 
+        Min('kriteria4')
     )
 
 
@@ -318,24 +317,24 @@ def hitung_normalisasi(request):
 
         # Mendapatkan nilai maksimal dan minimal untuk setiap kriteria
         max_values = Penilaian.objects.aggregate(
-            Max('kriteria1__nilai'), 
-            Max('kriteria2__nilai'), 
-            Max('kriteria3__nilai'), 
-            Max('kriteria4__nilai')
+            Max('kriteria1'), 
+            Max('kriteria2'), 
+            Max('kriteria3'), 
+            Max('kriteria4')
         )
         min_values = Penilaian.objects.aggregate(
-            Min('kriteria1__nilai'), 
-            Min('kriteria2__nilai'), 
-            Min('kriteria3__nilai'), 
-            Min('kriteria4__nilai')
+            Min('kriteria1'), 
+            Min('kriteria2'), 
+            Min('kriteria3'), 
+            Min('kriteria4')
         )
 
         # Menghitung normalisasi untuk setiap data penilaian
         for data in penilaian_data:
-            normalisasi_kriteria1 = data.kriteria1.nilai / max_values['kriteria1__nilai__max']
-            normalisasi_kriteria2 = data.kriteria2.nilai / max_values['kriteria2__nilai__max']
-            normalisasi_kriteria3 = data.kriteria3.nilai / max_values['kriteria3__nilai__max']
-            normalisasi_kriteria4 = data.kriteria4.nilai / max_values['kriteria4__nilai__max']
+            normalisasi_kriteria1 = data.kriteria1 / max_values['kriteria1__max']
+            normalisasi_kriteria2 = data.kriteria2 / max_values['kriteria2__max']
+            normalisasi_kriteria3 = data.kriteria3 / max_values['kriteria3__max']
+            normalisasi_kriteria4 = data.kriteria4 / max_values['kriteria4__max']
 
             # Menyimpan hasil normalisasi ke dalam tabel Normalisasi
             Normalisasi.objects.create(

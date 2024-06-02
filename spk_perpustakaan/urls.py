@@ -35,10 +35,10 @@ urlpatterns = [
     path('dashboard/kriteria/edit/<int:id>',views.edit_kriteria, name='edit_kriteria'),
     path('dashboard/kriteria/delete/<int:id>',views.hapus_kriteria, name='hapus_kriteria'),
     # crips
-    path('dashboard/kriteria/crips/<int:id>',views.dashboard_crips, name='crips'),
-    path('dashboard/kriteria/crips/add/',views.tambah_crips, name='add_crips'),
-    path('dashboard/kriteria/crips/edit/<int:id>',views.edit_crips, name='edit_crips'),
-    path('dashboard/kriteria/crips/delete/<int:id>',views.hapus_crips, name='hapus_crips'),
+    # path('dashboard/kriteria/crips/<int:id>',views.dashboard_crips, name='crips'),
+    # path('dashboard/kriteria/crips/add/',views.tambah_crips, name='add_crips'),
+    # path('dashboard/kriteria/crips/edit/<int:id>',views.edit_crips, name='edit_crips'),
+    # path('dashboard/kriteria/crips/delete/<int:id>',views.hapus_crips, name='hapus_crips'),
     # alternatif
     path('dashboard/penilaian/',views.dashboard_penilaian, name='penilaian'),
     path('dashboard/penilaian/add/',views.tambah_penilaian, name='add_penilaian'),
