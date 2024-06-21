@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings 
 from django.conf.urls.static import static 
 from spk_perpus_app import views
@@ -36,5 +36,6 @@ urlpatterns = [
     path('dashboard/penilaian/normalisasi/reset',views.reset_normalisasi, name='reset_normalisasi'),
 
     path('admin/', admin.site.urls), #dashboard bawaan django
+    path("__debug__/", include("debug_toolbar.urls")),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

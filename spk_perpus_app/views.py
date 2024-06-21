@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max, Min
+from django.db.models import Max, Count, Q
 # modul core
 from .models import Alternatif, Kriteria, Penilaian, Normalisasi, Rengking
 from .forms import AlternatifForm, KriteriaForm, PenilaianForm
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 """
@@ -25,32 +26,59 @@ def dashboard :
 """
 @login_required
 def dashboard(request):
-    data_rengking = Rengking.objects.all()
-    alternatif = Alternatif.objects.all().count()
-    kriteria = Kriteria.objects.all().count()
-    penilaian = Penilaian.objects.all().count() / Alternatif.objects.all().count()
+    # Menggunakan select_related untuk mengurangi jumlah query jika ada hubungan ke model lain
+    data_rengking = Rengking.objects.select_related('alternatif').all()
 
-    # Mendapatkan total nilai tertinggi
-    max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
-    # Mendapatkan jumlah rekomendasi
+    # Menghitung jumlah alternatif, kriteria, dan penilaian
+    alternatif_count = Alternatif.objects.count()
+    kriteria_count = Kriteria.objects.count()
+    penilaian_count = Penilaian.objects.count() / alternatif_count if alternatif_count > 0 else 0
+
+    # Mengambil nilai maksimal dari total_nilai
+    max_total = Rengking.objects.aggregate(max_total=Max('total_nilai'))['max_total']
+
+    # Menghitung jumlah rekomendasi berdasarkan nilai maksimal total_nilai
     total_rekomendasi = Rengking.objects.filter(total_nilai=max_total).count()
 
     # Mengumpulkan data untuk grafik Highcharts
-    categories = []
-    series_data = []
-
-    for rengking in data_rengking:
-        categories.append(rengking.alternatif.nama)
-        series_data.append(rengking.total_nilai)
+    categories = [rengking.alternatif.nama for rengking in data_rengking]
+    series_data = [rengking.total_nilai for rengking in data_rengking]
 
     context = {
         'categories': categories,
         'series_data': series_data,
-        'alternatif':alternatif,
-        'kriteria':kriteria,
-        'penilaian':penilaian,
+        'alternatif': alternatif_count,
+        'kriteria': kriteria_count,
+        'penilaian': penilaian_count,
         'total_rekomendasi': total_rekomendasi
     }
+
+    # data_rengking = Rengking.objects.all()
+    # alternatif = Alternatif.objects.all().count()
+    # kriteria = Kriteria.objects.all().count()
+    # penilaian = Penilaian.objects.all().count() / Alternatif.objects.all().count()
+
+    # # Mendapatkan total nilai tertinggi
+    # max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
+    # # Mendapatkan jumlah rekomendasi
+    # total_rekomendasi = Rengking.objects.filter(total_nilai=max_total).count()
+
+    # # Mengumpulkan data untuk grafik Highcharts
+    # categories = []
+    # series_data = []
+
+    # for rengking in data_rengking:
+    #     categories.append(rengking.alternatif.nama)
+    #     series_data.append(rengking.total_nilai)
+
+    # context = {
+    #     'categories': categories,
+    #     'series_data': series_data,
+    #     'alternatif':alternatif,
+    #     'kriteria':kriteria,
+    #     'penilaian':penilaian,
+    #     'total_rekomendasi': total_rekomendasi
+    # }
 
     return render(request, 'dashboard01.html', context)
 
@@ -65,8 +93,9 @@ def dashboard_alternatif :
     tujuanya supaya bisa menampilkan semua data tersebut pada halaman alternatif
 """
 @login_required
+@cache_page(60 * 15) 
 def dashboard_alternatif(request):
-    datas = Alternatif.objects.all()
+    datas = Alternatif.objects.only('simbol', 'nama', 'created', 'updated')
 
     context ={
         'datas':datas,
@@ -187,10 +216,15 @@ def hapus_kriteria(request,id):
 # PENILAIAN ---------------------------------------------------------------------
 @login_required
 def dashboard_penilaian(request):
-    data= Penilaian.objects.all()
-    data_normalisasi= Normalisasi.objects.all()
+    data = Penilaian.objects.select_related('alternatif').all()
+    data_normalisasi = Normalisasi.objects.select_related('alternatif').all()
     data_kriteria = Kriteria.objects.all()
-    data_rengking = Rengking.objects.all()
+    data_rengking = Rengking.objects.select_related('alternatif').all()
+
+    # data= Penilaian.objects.all()
+    # data_normalisasi= Normalisasi.objects.all()
+    # data_kriteria = Kriteria.objects.all()
+    # data_rengking = Rengking.objects.all()
 
     # Menghitung nilai maksimal dan minimal untuk setiap kriteria
     max_values = Penilaian.objects.aggregate(
@@ -257,14 +291,25 @@ def hapus_penilaian(request,id):
 
 @login_required
 def dashboard_rengking(request):
-    max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
-    data_rengking = Rengking.objects.all().order_by('-total_nilai')
+    # Menggunakan select_related untuk mengurangi jumlah query jika ada hubungan ke model lain
+    data_rengking = Rengking.objects.select_related('alternatif').all().order_by('-total_nilai')
 
-    context ={
+    # Mengambil nilai maksimal dari total_nilai
+    max_total = data_rengking.aggregate(Max('total_nilai'))['total_nilai__max']
+
+    context = {
         'data_rengking': data_rengking,
         'max_total': max_total
     }
     return render(request, 'dashboard06.html', context)
+    # max_total = Rengking.objects.aggregate(Max('total_nilai'))['total_nilai__max']
+    # data_rengking = Rengking.objects.all().order_by('-total_nilai')
+
+    # context ={
+    #     'data_rengking': data_rengking,
+    #     'max_total': max_total
+    # }
+    # return render(request, 'dashboard06.html', context)
 
 """
 def hitung_normalisasi:
